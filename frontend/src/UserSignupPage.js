@@ -15,8 +15,7 @@ class UserSignupPage extends React.Component {
             [name]: value,
         });
     }
-
-
+    
     render() {
         return (
             <form>
