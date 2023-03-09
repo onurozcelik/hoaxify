@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 class UserSignupPage extends React.Component {
 
@@ -20,13 +21,15 @@ class UserSignupPage extends React.Component {
         event.preventDefault();
         const {username,displayName,password} = this.state;
 
+        console.log(username);
+
         const body = {
             username,
             displayName,
             password
         }
-        
-        //TODO: axios.post('path', body);
+
+        axios.post('http://localhost:8080/api/1.0/users', body);
     }
     
     render() {
