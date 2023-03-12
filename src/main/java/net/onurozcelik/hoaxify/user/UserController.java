@@ -7,14 +7,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.onurozcelik.hoaxify.shared.*;
+
 @RestController
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    UserService userService;
 
     @PostMapping("/api/1.0/users")
-    public void createUser(@RequestBody User user) {
-        userRepository.save(user);
+    public GenericResponse createUser(@RequestBody User user) {
+        userService.save(user);
+        GenericResponse response = new GenericResponse("User created");
+        return response;
     }
 }
