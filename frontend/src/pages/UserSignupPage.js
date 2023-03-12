@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import { signup } from '../api/apiCalls';
 
 class UserSignupPage extends React.Component {
 
@@ -7,7 +7,8 @@ class UserSignupPage extends React.Component {
         username: null,
         displayName: null,
         password: null,
-        passwordRepeat: null
+        passwordRepeat: null,
+        pendingApiCall: false,
     };
 
     onChange = event => {
@@ -17,7 +18,7 @@ class UserSignupPage extends React.Component {
         });
     }
 
-    onClickSignup = event => {
+    onClickSignup = async event => {
         event.preventDefault();
         const { username, displayName, password } = this.state;
 
@@ -29,10 +30,16 @@ class UserSignupPage extends React.Component {
             password
         }
 
-        axios.post('/api/1.0/users', body);
+        this.setState({ pendingApiCall: true });
+
+        try {
+            const response = await signup(body);
+        } catch (error) { }
+        this.setState({ pendingApiCall: false });
     }
 
     render() {
+        const { pendingApiCall } = this.state;
         return (
             <div className="container">
                 <form>
@@ -54,7 +61,10 @@ class UserSignupPage extends React.Component {
                         <input className="form-control" name="passwordRepeat" type="password" onChange={this.onChange} />
                     </div>
                     <div className="text-center">
-                        <button className="btn btn-primary" onClick={this.onClickSignup}>Sign Up</button>
+                        <button className="btn btn-primary" disabled={pendingApiCall} onClick={this.onClickSignup}>
+                            {pendingApiCall && <span className="spinner-border spinner-border-sm"></span>}
+                            Sign Up
+                        </button>
                     </div>
                 </form>
             </div>
