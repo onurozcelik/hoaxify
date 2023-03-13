@@ -39,7 +39,7 @@ class UserSignupPage extends React.Component {
     }
 
     render() {
-        const { pendingApiCall } = this.state;
+        const { pendingApiCall } = this.state; 
         return (
             <div className="container">
                 <form>
