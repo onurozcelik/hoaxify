@@ -9,12 +9,18 @@ class UserSignupPage extends React.Component {
         password: null,
         passwordRepeat: null,
         pendingApiCall: false,
+        errors: {}
     };
 
     onChange = event => {
+        // Here we take controls name, value
         const { name, value } = event.target;
+        // Created copy of errors object
+        const errors = {... this.state.errors};
+        errors[name] = undefined;
         this.setState({
-            [name]: value,
+            [name]: value, 
+            errors
         });
     }
 
@@ -34,19 +40,28 @@ class UserSignupPage extends React.Component {
 
         try {
             const response = await signup(body);
-        } catch (error) { }
+        } catch (error) { 
+            // Important to check 
+            if (error.response.data.validations) {
+                this.setState({errors: error.response.data.validations});
+            }
+        }
         this.setState({ pendingApiCall: false });
     }
 
     render() {
-        const { pendingApiCall } = this.state; 
+        const { pendingApiCall, errors } = this.state;
+        const {username} = errors; 
         return (
             <div className="container">
                 <form>
                     <h1 className="text-center">Sign Up</h1>
                     <div className="form-group">
                         <label>Username</label>
-                        <input className="form-control" name="username" onChange={this.onChange} />
+                        <input className={username ? "form-control is-invalid" : "form-control"} name="username" onChange={this.onChange} />
+                        <div className="invalid-feedback">
+      {username}
+    </div>
                     </div>
                     <div className="form-group">
                         <label>Display Name</label>
