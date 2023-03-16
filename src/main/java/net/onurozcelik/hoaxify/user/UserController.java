@@ -3,8 +3,8 @@ package net.onurozcelik.hoaxify.user;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/api/1.0/users")
-    public ResponseEntity<?> createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
         String username = user.getUsername();
         String displayName = user.getDisplayName();
         ApiError error = new ApiError(400, "Validation error", "api/1.0/users");
