@@ -1,4 +1,10 @@
 spring:
+  jpa:
+    properties:
+      javax:
+        persistence:
+          validation:
+            mode: none
   datasource:
     # Cancels auto generated db name
     generate-unique-name: false 
