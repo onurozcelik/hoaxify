@@ -1,6 +1,7 @@
 import React from 'react';
 import { signup } from '../api/apiCalls';
 import Input from '../components/Input';
+import { withTranslation } from 'react-i18next';
 
 class UserSignupPage extends React.Component {
 
@@ -16,14 +17,15 @@ class UserSignupPage extends React.Component {
     onChange = event => {
         // Here we take controls name, value
         const { name, value } = event.target;
+        const { t } = this.props;
         // Created copy of errors object
         const errors = { ... this.state.errors };
         errors[name] = undefined;
         if (name === 'password' || name === 'passwordRepeat') {
             if (name === 'password' && value !== this.state.passwordRepeat) {
-                errors.passwordRepeat = 'Password mismatch';
+                errors.passwordRepeat = t('Password mismatch');
             } else if (name === 'passwordRepeat' && value !== this.state.password) {
-                errors.passwordRepeat = 'Password mismatch';
+                errors.passwordRepeat = t('Password mismatch');
             } else {
                 errors.passwordRepeat = undefined;
             }
@@ -60,12 +62,13 @@ class UserSignupPage extends React.Component {
     }
 
     render() {
+        const { t } = this.props;
         const { pendingApiCall, errors } = this.state;
         const { username, displayName, password, passwordRepeat } = errors;
         return (
             <div className="container">
                 <form>
-                    <h1 className="text-center">Sign Up</h1>
+                    <h1 className="text-center">{t('Sign Up')}</h1>
                     <Input name="username" label="Username" error={username} onChange={this.onChange} />
                     <Input name="displayName" label="Display Name" error={displayName} onChange={this.onChange} />
                     <Input name="password" label="Password" error={password} onChange={this.onChange} type="password" />
@@ -82,4 +85,4 @@ class UserSignupPage extends React.Component {
     }
 }
 
-export default UserSignupPage;
+export default withTranslation()(UserSignupPage);
