@@ -17,10 +17,10 @@ class UserSignupPage extends React.Component {
         // Here we take controls name, value
         const { name, value } = event.target;
         // Created copy of errors object
-        const errors = {... this.state.errors};
+        const errors = { ... this.state.errors };
         errors[name] = undefined;
         this.setState({
-            [name]: value, 
+            [name]: value,
             errors
         });
     }
@@ -41,10 +41,10 @@ class UserSignupPage extends React.Component {
 
         try {
             const response = await signup(body);
-        } catch (error) { 
+        } catch (error) {
             // Important to check 
             if (error.response.data.validations) {
-                this.setState({errors: error.response.data.validations});
+                this.setState({ errors: error.response.data.validations });
             }
         }
         this.setState({ pendingApiCall: false });
@@ -52,17 +52,14 @@ class UserSignupPage extends React.Component {
 
     render() {
         const { pendingApiCall, errors } = this.state;
-        const {username, displayName} = errors; 
+        const { username, displayName, password } = errors;
         return (
             <div className="container">
                 <form>
                     <h1 className="text-center">Sign Up</h1>
                     <Input name="username" label="Username" error={username} onChange={this.onChange} />
                     <Input name="displayName" label="Display Name" error={displayName} onChange={this.onChange} />
-                    <div className="form-group">
-                        <label>Password</label>
-                        <input className="form-control" name="password" type="password" onChange={this.onChange} />
-                    </div>
+                    <Input name="password" label="Password" error={password} onChange={this.onChange} type="password" />
                     <div className="form-group">
                         <label>Password Repeat</label>
                         <input className="form-control" name="passwordRepeat" type="password" onChange={this.onChange} />

@@ -46,6 +46,7 @@ public class UserController {
          * userService.save(user);
          * return ResponseEntity.ok(new GenericResponse("User created"));
          */
+        userService.save(user);
         return new GenericResponse("User created");
     }
 
