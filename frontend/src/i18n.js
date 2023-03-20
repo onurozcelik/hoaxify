@@ -6,17 +6,25 @@ i18n.use(initReactI18next).init({
         en: {
             translations: {
                 'Sign Up': 'Sign Up',
-                'Password mismatch': 'Password mismatch'
+                'Password mismatch': 'Password mismatch',
+                'Username':'Username',
+                'Display Name':'Display Name',
+                'Password':'Password',
+                'Password Repeat':'Password Repeat'
             }
         },
         tr: {
             translations: {
                 'Sign Up': 'Kay\u0131t Ol',
-                'Password mismatch': 'Ayn\u0131 şifreyi giriniz'
+                'Password mismatch': 'Ayn\u0131 şifreyi giriniz',
+                'Username':'Kullan\u0131c\u0131 Ad\u0131',
+                'Display Name':'Görünen Ad',
+                'Password':'Şifre',
+                'Password Repeat':'Şifre Tekrar\u0131'
             }
         }
     },
-    fallbackLng: 'tr',
+    fallbackLng: 'en',
     ns: ['translations'],
     defaultNS: ['translations'],
     keySeperator: false,

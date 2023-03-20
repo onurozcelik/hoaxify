@@ -1,14 +1,11 @@
 import React from "react";
-import { signup, changeLanguage } from "../api/apiCalls";
 import Input from "../components/Input";
 import { withTranslation } from "react-i18next";
 
-class UserSignupPage extends React.Component {
+class LoginPage extends React.Component {
   state = {
     username: null,
-    displayName: null,
     password: null,
-    passwordRepeat: null,
     pendingApiCall: false,
     errors: {},
   };
@@ -20,70 +17,24 @@ class UserSignupPage extends React.Component {
     // Created copy of errors object
     const errors = { ...this.state.errors };
     errors[name] = undefined;
-    if (name === "password" || name === "passwordRepeat") {
-      if (name === "password" && value !== this.state.passwordRepeat) {
-        errors.passwordRepeat = t("Password mismatch");
-      } else if (name === "passwordRepeat" && value !== this.state.password) {
-        errors.passwordRepeat = t("Password mismatch");
-      } else {
-        errors.passwordRepeat = undefined;
-      }
-    }
     this.setState({
       [name]: value,
       errors,
     });
   };
 
-  onClickSignup = async (event) => {
-    event.preventDefault();
-    const { username, displayName, password } = this.state;
-
-    console.log(username);
-
-    const body = {
-      username,
-      displayName,
-      password,
-    };
-
-    this.setState({ pendingApiCall: true });
-
-    try {
-      const response = await signup(body);
-    } catch (error) {
-      // Important to check
-      if (error.response.data.validations) {
-        this.setState({ errors: error.response.data.validations });
-      }
-    }
-    this.setState({ pendingApiCall: false });
-  };
-
-  onChangeLanguage = (language) => {
-    const { i18n } = this.props;
-    i18n.changeLanguage(language);
-    changeLanguage(language);
-  };
-
   render() {
     const { t } = this.props;
     const { pendingApiCall, errors } = this.state;
-    const { username, displayName, password, passwordRepeat } = errors;
+    const { username, password } = errors;
     return (
       <div className="container">
         <form>
-          <h1 className="text-center">{t("Sign Up")}</h1>
+          <h1 className="text-center">{t("Login")}</h1>
           <Input
             name="username"
             label={t("Username")}
             error={username}
-            onChange={this.onChange}
-          />
-          <Input
-            name="displayName"
-            label={t("Display Name")}
-            error={displayName}
             onChange={this.onChange}
           />
           <Input
@@ -93,23 +44,16 @@ class UserSignupPage extends React.Component {
             onChange={this.onChange}
             type="password"
           />
-          <Input
-            name="passwordRepeat"
-            label={t("Password Repeat")}
-            error={passwordRepeat}
-            onChange={this.onChange}
-            type="password"
-          />
           <div className="text-center">
             <button
               className="btn btn-primary"
-              disabled={pendingApiCall || passwordRepeat !== undefined}
-              onClick={this.onClickSignup}
+              disabled={pendingApiCall}
+              onClick={this.onClickLogin}
             >
               {pendingApiCall && (
                 <span className="spinner-border spinner-border-sm"></span>
               )}
-              {t("Sign Up")}
+              {t("Login")}
             </button>
           </div>
           <div>
@@ -140,4 +84,4 @@ class UserSignupPage extends React.Component {
   }
 }
 
-export default withTranslation()(UserSignupPage);
+export default withTranslation()(LoginPage);
