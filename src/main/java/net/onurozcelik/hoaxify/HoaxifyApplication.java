@@ -18,19 +18,14 @@ public class HoaxifyApplication {
 	// Spring injects dependencies automatically to beans
 	@Bean
 	CommandLineRunner createInitialUsers(UserService userService) {
-		return new CommandLineRunner() {
-
-			@Override
-			public void run(String... args) throws Exception {
+		return (args) -> {
 				User user = new User();
 				user.setUsername("user1");
 				user.setDisplayName("display1");
 				user.setPassword("P4ssword");
 				
 				userService.save(user);
-			}
+			};
 			
-		};
-	}
-
+		}
 }
