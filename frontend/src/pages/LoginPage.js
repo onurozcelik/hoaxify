@@ -1,6 +1,7 @@
 import React from "react";
 import Input from "../components/Input";
 import { withTranslation } from "react-i18next";
+import { login } from "../api/apiCalls";
 
 class LoginPage extends React.Component {
   state = {
@@ -22,6 +23,16 @@ class LoginPage extends React.Component {
       errors,
     });
   };
+
+  onClickLogin = event => {
+    event.preventDefault();
+    const { username, password } = this.state;
+    const crendetials = {
+      username,
+      password
+    }
+    login(crendetials);
+  }
 
   render() {
     const { t } = this.props;
@@ -55,28 +66,6 @@ class LoginPage extends React.Component {
               )}
               {t("Login")}
             </button>
-          </div>
-          <div>
-            <img
-              src="https://flagcdn.com/24x18/tr.png"
-              srcset="https://flagcdn.com/48x36/tr.png 2x,
-    https://flagcdn.com/72x54/tr.png 3x"
-              width="24"
-              height="18"
-              alt="Turkey"
-              onClick={() => this.onChangeLanguage("tr")}
-              style={{ cursor: "pointer" }}
-            />
-            <img
-              src="https://flagcdn.com/24x18/us.png"
-              srcset="https://flagcdn.com/48x36/us.png 2x,
-    https://flagcdn.com/72x54/us.png 3x"
-              width="24"
-              height="18"
-              alt="United States"
-              onClick={() => this.onChangeLanguage("en")}
-              style={{ cursor: "pointer" }}
-            />
           </div>
         </form>
       </div>
