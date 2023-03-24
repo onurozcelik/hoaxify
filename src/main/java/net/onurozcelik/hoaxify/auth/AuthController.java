@@ -9,9 +9,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.crypto.bcrypt.*;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import net.onurozcelik.hoaxify.error.ApiError;
+import net.onurozcelik.hoaxify.shared.Views;
 import net.onurozcelik.hoaxify.user.User;
 import net.onurozcelik.hoaxify.user.UserRepository;
 
@@ -24,6 +26,7 @@ public class AuthController {
 	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();;
 	
 	@PostMapping("/api/1.0/auth")
+	@JsonView(Views.Base.class)
 	public ResponseEntity<?> handleAuthentication(@RequestHeader(name = "Authorization", required = false) String authorization) {
 		if (authorization == null) {
 			ApiError error = new ApiError(401, "Unauthorized request","/api/1.0/auth");
@@ -45,6 +48,6 @@ public class AuthController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
 		}
 		
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(inDB);
 	}
 }
