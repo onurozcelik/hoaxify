@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 
 import net.onurozcelik.hoaxify.user.*;
 
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+@SpringBootApplication
 public class HoaxifyApplication {
 
 	public static void main(String[] args) {

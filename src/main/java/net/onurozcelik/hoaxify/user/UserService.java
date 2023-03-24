@@ -1,17 +1,17 @@
 package net.onurozcelik.hoaxify.user;
 
 import org.springframework.stereotype.Service;
-import org.springframework.security.crypto.bcrypt.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 public class UserService {
 
     UserRepository userRepository;
-    BCryptPasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void save(User user) {
