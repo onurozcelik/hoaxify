@@ -12,7 +12,7 @@ import net.onurozcelik.hoaxify.user.UserRepository;
 // This class is required for Spring Security to work
 @Service
 public class UserAuthService implements UserDetailsService {
-	
+
 	@Autowired
 	private UserRepository userRepository;
 
@@ -22,7 +22,7 @@ public class UserAuthService implements UserDetailsService {
 		if (inDB == null) {
 			throw new UsernameNotFoundException("User not found");
 		}
-		return new HoaxifyUserDetails(inDB);
+		return inDB;
 	}
 
 }
