@@ -8,36 +8,39 @@ class LoginPage extends React.Component {
     username: null,
     password: null,
     pendingApiCall: false,
-    errors: {},
+    error: null
   };
 
   onChange = (event) => {
     // Here we take controls name, value
     const { name, value } = event.target;
     const { t } = this.props;
-    // Created copy of errors object
-    const errors = { ...this.state.errors };
-    errors[name] = undefined;
+
     this.setState({
       [name]: value,
-      errors,
+      error: null
     });
   };
 
-  onClickLogin = event => {
+  onClickLogin = async event => {
     event.preventDefault();
     const { username, password } = this.state;
     const crendetials = {
       username,
       password
     }
-    login(crendetials);
+    this.setState({ error: null });
+    try {
+      await login(crendetials);
+    } catch (apiError) {
+      this.setState({ error: apiError.response.data.message });
+    }
   }
 
   render() {
     const { t } = this.props;
-    const { pendingApiCall, errors } = this.state;
-    const { username, password } = errors;
+    const { username, password, error, pendingApiCall } = this.state;
+    const buttonEnabled = username && password;
     return (
       <div className="container">
         <form>
@@ -45,20 +48,24 @@ class LoginPage extends React.Component {
           <Input
             name="username"
             label={t("Username")}
-            error={username}
             onChange={this.onChange}
           />
           <Input
             name="password"
             label={t("Password")}
-            error={password}
             onChange={this.onChange}
             type="password"
           />
+          {error &&
+            <div className="alert alert-danger">
+              {error}
+            </div>
+          }
+
           <div className="text-center">
             <button
               className="btn btn-primary"
-              disabled={pendingApiCall}
+              disabled={!buttonEnabled}
               onClick={this.onClickLogin}
             >
               {pendingApiCall && (
