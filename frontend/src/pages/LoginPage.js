@@ -2,6 +2,8 @@ import React from "react";
 import Input from "../components/Input";
 import { withTranslation } from "react-i18next";
 import { login } from "../api/apiCalls";
+import axios from "axios";
+import ButtonWithProgress from "../components/ButtonWithProgress";
 
 class LoginPage extends React.Component {
   state = {
@@ -11,11 +13,25 @@ class LoginPage extends React.Component {
     error: null
   };
 
+  componentDidMount() {
+    axios.interceptors.request.use((request) => {
+      this.setState({ pendingApiCall: true });
+      // This is required to continue to request
+      return request;
+    });
+    axios.interceptors.response.use((response) => {
+      this.setState({ pendingApiCall: false });
+      // This is required to continue to response
+      return response;
+    }, (error) => {
+      this.setState({ pendingApiCall: false });
+      throw error;
+    });
+  }
+
   onChange = (event) => {
     // Here we take controls name, value
     const { name, value } = event.target;
-    const { t } = this.props;
-
     this.setState({
       [name]: value,
       error: null
@@ -63,16 +79,10 @@ class LoginPage extends React.Component {
           }
 
           <div className="text-center">
-            <button
-              className="btn btn-primary"
-              disabled={!buttonEnabled}
-              onClick={this.onClickLogin}
-            >
-              {pendingApiCall && (
-                <span className="spinner-border spinner-border-sm"></span>
-              )}
-              {t("Login")}
-            </button>
+            <ButtonWithProgress
+              disabled={!buttonEnabled || pendingApiCall}
+              onClick={this.onClickLogin} pendingApiCall={pendingApiCall} text={t("Login")}
+            />
           </div>
         </form>
       </div>
