@@ -26,7 +26,7 @@ i18n.use(initReactI18next).init({
             }
         }
     },
-    fallbackLng: 'en',
+    fallbackLng: 'tr',
     ns: ['translations'],
     defaultNS: ['translations'],
     keySeperator: false,

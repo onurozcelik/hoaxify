@@ -8,26 +8,9 @@ import ButtonWithProgress from "../components/ButtonWithProgress";
 class LoginPage extends React.Component {
   state = {
     username: null,
-    password: null,
-    pendingApiCall: false,
+    password: null,    
     error: null
   };
-
-  componentDidMount() {
-    axios.interceptors.request.use((request) => {
-      this.setState({ pendingApiCall: true });
-      // This is required to continue to request
-      return request;
-    });
-    axios.interceptors.response.use((response) => {
-      this.setState({ pendingApiCall: false });
-      // This is required to continue to response
-      return response;
-    }, (error) => {
-      this.setState({ pendingApiCall: false });
-      throw error;
-    });
-  }
 
   onChange = (event) => {
     // Here we take controls name, value
@@ -54,8 +37,8 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
-    const { username, password, error, pendingApiCall } = this.state;
+    const { t, pendingApiCall } = this.props;
+    const { username, password, error } = this.state;
     const buttonEnabled = username && password;
     return (
       <div className="container">
