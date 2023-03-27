@@ -6,17 +6,13 @@ import LoginPage from './pages/LoginPage';
 import UserSignupPage from './pages/UserSignupPage';
 import reportWebVitals from './reportWebVitals';
 import LanguageSelector from './components/LanguageSelector';
-import ApiProgress from './shared/ApiProgress';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <div>
-      {/* path property shall be /api/1.0/users for UserSignupPage */}
-      <ApiProgress path="/api/1.0/auth">
         <LoginPage />
         {/*<UserSignupPage />*/}
-      </ApiProgress>
       <LanguageSelector />
     </div>
 

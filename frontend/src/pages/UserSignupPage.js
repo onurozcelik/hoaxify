@@ -2,8 +2,8 @@ import React from "react";
 import { signup } from "../api/apiCalls";
 import Input from "../components/Input";
 import { withTranslation } from "react-i18next";
-import LanguageSelector from "../components/LanguageSelector";
 import ButtonWithProgress from "../components/ButtonWithProgress";
+import { withApiProgress } from "../shared/ApiProgress";
 
 class UserSignupPage extends React.Component {
   state = {
@@ -102,4 +102,7 @@ class UserSignupPage extends React.Component {
   }
 }
 
-export default withTranslation()(UserSignupPage);
+const UserSignupPageWithTranslation = withTranslation()(UserSignupPage);
+const UserSignupPageWithApiProgress = withApiProgress(UserSignupPageWithTranslation, '/api/1.0/users');
+
+export default UserSignupPageWithApiProgress
