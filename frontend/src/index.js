@@ -6,17 +6,15 @@ import LoginPage from './pages/LoginPage';
 import UserSignupPage from './pages/UserSignupPage';
 import reportWebVitals from './reportWebVitals';
 import LanguageSelector from './components/LanguageSelector';
+import HomePage from './pages/HomePage';
+import UserPage from './pages/UserPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <div>
-        <LoginPage />
-        {/*<UserSignupPage />*/}
+        <LoginPage/>
       <LanguageSelector />
     </div>
-
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
