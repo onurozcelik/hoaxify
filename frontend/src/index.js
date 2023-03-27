@@ -12,7 +12,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <div>
-      <ApiProgress>
+      {/* path property shall be /api/1.0/users for UserSignupPage */}
+      <ApiProgress path="/api/1.0/auth">
         <LoginPage />
         {/*<UserSignupPage />*/}
       </ApiProgress>
