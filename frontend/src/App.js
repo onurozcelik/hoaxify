@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import LanguageSelector from "./components/LanguageSelector";
+import {HashRouter, Redirect, Route, Switch } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import LoginPageWithApiProgress from "./pages/LoginPage";
+import UserSignupPageWithApiProgress from "./pages/UserSignupPage";
+import UserPage from "./pages/UserPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and is changed.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <HashRouter>
+        <Switch>
+          {/*exact is required to unmatch home page when the url is /login */}
+          <Route exact path="/" component={HomePage} />
+          <Route path="/login" component={LoginPageWithApiProgress} />
+          <Route path="/signup" component={UserSignupPageWithApiProgress} />
+          <Route path="/user/:username" component={UserPage} />
+          <Redirect to="/" />
+        </Switch>
+      </HashRouter>
+      <LanguageSelector />
     </div>
   );
 }
