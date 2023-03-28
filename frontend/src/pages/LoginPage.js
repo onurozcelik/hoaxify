@@ -41,8 +41,7 @@ class LoginPage extends React.Component {
     const { username, password, error } = this.state;
     const buttonEnabled = username && password;
     return (
-      <div className="container">
-        <form>
+        <form className="container-md">
           <h1 className="text-center">{t("Login")}</h1>
           <Input
             name="username"
@@ -60,7 +59,6 @@ class LoginPage extends React.Component {
               {error}
             </div>
           }
-
           <div className="text-center">
             <ButtonWithProgress
               disabled={!buttonEnabled || pendingApiCall}
@@ -68,7 +66,6 @@ class LoginPage extends React.Component {
             />
           </div>
         </form>
-      </div>
     );
   }
 }

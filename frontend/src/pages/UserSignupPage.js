@@ -63,7 +63,7 @@ class UserSignupPage extends React.Component {
     const { errors } = this.state;
     const { username, displayName, password, passwordRepeat } = errors;
     return (
-      <div className="container">
+      <div className="container-md">
         <form>
           <h1 className="text-center">{t("Sign Up")}</h1>
           <Input

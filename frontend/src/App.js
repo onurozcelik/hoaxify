@@ -1,16 +1,18 @@
 import logo from "./logo.svg";
 import "./App.css";
 import LanguageSelector from "./components/LanguageSelector";
-import {HashRouter, Redirect, Route, Switch } from "react-router-dom";
+import {HashRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPageWithApiProgress from "./pages/LoginPage";
 import UserSignupPageWithApiProgress from "./pages/UserSignupPage";
 import UserPage from "./pages/UserPage";
+import TopBar from "./components/TopBar";
 
 function App() {
   return (
     <div>
-      <HashRouter>
+      <Router>
+        <TopBar/>
         <Switch>
           {/*exact is required to unmatch home page when the url is /login */}
           <Route exact path="/" component={HomePage} />
@@ -19,7 +21,7 @@ function App() {
           <Route path="/user/:username" component={UserPage} />
           <Redirect to="/" />
         </Switch>
-      </HashRouter>
+      </Router>
       <LanguageSelector />
     </div>
   );
