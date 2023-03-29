@@ -24,13 +24,17 @@ class LoginPage extends React.Component {
   onClickLogin = async event => {
     event.preventDefault();
     const { username, password } = this.state;
+    const {onLoginSuccess} = this.props;
     const crendetials = {
       username,
       password
     }
     this.setState({ error: null });
+    const {push} = this.props.history;
     try {
       await login(crendetials);
+      onLoginSuccess(username);
+      push('/');
     } catch (apiError) {
       this.setState({ error: apiError.response.data.message });
     }
