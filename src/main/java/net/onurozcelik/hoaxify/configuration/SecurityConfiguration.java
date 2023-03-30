@@ -19,6 +19,9 @@ public class SecurityConfiguration {
 		// Disables CSRF
 		http.csrf().disable();
 		
+		// Required for H2 console to work properly
+		http.headers().frameOptions().disable();
+		
 		http.httpBasic().authenticationEntryPoint(new AuthEntryPoint());
 		
 		http.authorizeHttpRequests()
