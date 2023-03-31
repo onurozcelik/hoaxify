@@ -10,34 +10,11 @@ import HomePage from "./pages/HomePage";
 import UserPage from "./pages/UserPage";
 import App from "./App";
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import configureStore from "./redux/configureStore";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const loggedInState = {
-  isLoggedIn: true,
-  username: 'user1',
-  displayName: 'display1',
-  image: null,
-  password: 'P4ssword'
-};
-
-const defaultState = {
-  isLoggedIn: false,
-  username: undefined,
-  displayName: undefined,
-  image: null,
-  password: undefined
-};
-
-const reducer = (state, action) => {
-  if (action.type === 'logout-success') {
-    return defaultState;
-  }
-  return state;
-}
-
-const store = createStore(reducer, loggedInState);
+const store = configureStore();
 
 root.render(
   <Provider store={store}>
