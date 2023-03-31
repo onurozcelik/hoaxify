@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { Authentication } from '../shared/AuthenticationContext';
+import { connect } from 'react-redux';
 
 const ProfileCard = (props) => {
     const pathUserName = props.match.params.username;
@@ -16,13 +16,10 @@ const ProfileCard = (props) => {
     );
 };
 
-class ProfileCardContextWrapper extends React.Component {
-    static contextType = Authentication;
-    render() {
-        return (
-            <ProfileCard {...this.props} username={this.context.state.username}/>
-        );
+const mapStateToProps = (store) => {
+    return {
+      username: store.username,
     }
-}
+  }
 
-export default withRouter(ProfileCardContextWrapper);
+export default connect(mapStateToProps)(withRouter(ProfileCard));

@@ -12,10 +12,11 @@ import LoginPageWithApiProgress from "./pages/LoginPage";
 import UserSignupPageWithApiProgress from "./pages/UserSignupPage";
 import UserPage from "./pages/UserPage";
 import TopBar from "./components/TopBar";
+import { connect } from 'react-redux';
 
 class App extends React.Component {
   render() {
-    const isLoggedIn = false;
+    const {isLoggedIn} = this.props;
     return (
       <div>
         <Router>
@@ -40,4 +41,10 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = (store) => {
+  return {
+    isLoggedIn: store.isLoggedIn
+  }
+}
+
+export default connect(mapStateToProps, null)(App);
