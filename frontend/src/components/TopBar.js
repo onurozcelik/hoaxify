@@ -2,15 +2,19 @@ import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import logo from "../assets/hoaxify.png";
-import { Authentication } from "../shared/AuthenticationContext";
+import { connect } from 'react-redux';
 
 class TopBar extends Component {
-  static contextType = Authentication;
+
+  onClickLogout = () => {
+    const action = {
+      type: 'logout-success'
+    };
+    this.props.dispatch(action);
+  }
 
   render() {
-    const { t } = this.props;
-    const { state, onLogoutSuccess } = this.context;
-    const { username, isLoggedIn } = state;
+    const { t, isLoggedIn, username } = this.props;
     let links = (
       <ul className="navbar-nav ms-auto">
         <li>
@@ -35,7 +39,7 @@ class TopBar extends Component {
           </li>
           <li
             className="nav-link"
-            onClick={onLogoutSuccess}
+            onClick={this.onClickLogout}
             style={{ cursor: "pointer" }}
           >
             Logout
@@ -56,4 +60,14 @@ class TopBar extends Component {
   }
 }
 
-export default withTranslation()(TopBar);
+const TopBarWithTranslation = withTranslation()(TopBar);
+
+// Maps redux state to components props
+const mapStateToProps = (store) => {
+  return {
+    username: store.username,
+    isLoggedIn: store.isLoggedIn
+  }
+}
+
+export default connect(mapStateToProps)(TopBarWithTranslation);

@@ -12,16 +12,14 @@ import LoginPageWithApiProgress from "./pages/LoginPage";
 import UserSignupPageWithApiProgress from "./pages/UserSignupPage";
 import UserPage from "./pages/UserPage";
 import TopBar from "./components/TopBar";
-import { Authentication } from "./shared/AuthenticationContext";
 
 class App extends React.Component {
-static contextType = Authentication;
   render() {
-    const isLoggedIn = this.context.state.isLoggedIn;
+    const isLoggedIn = false;
     return (
       <div>
         <Router>
-          <TopBar/>
+          <TopBar />
           <Switch>
             {/*exact is required to unmatch home page when the url is /login */}
             <Route exact path="/" component={HomePage} />
