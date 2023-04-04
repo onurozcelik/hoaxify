@@ -1,9 +1,10 @@
 import React from "react";
-import { signup } from "../api/apiCalls";
 import Input from "../components/Input";
 import { withTranslation } from "react-i18next";
 import ButtonWithProgress from "../components/ButtonWithProgress";
 import { withApiProgress } from "../shared/ApiProgress";
+import { connect } from "react-redux";
+import { signupHandler } from "../redux/authActions";
 
 class UserSignupPage extends React.Component {
   state = {
@@ -49,7 +50,10 @@ class UserSignupPage extends React.Component {
     };
 
     try {
-      const response = await signup(body);
+      const {history, dispatch} = this.props;
+      const {push} = history;
+      await dispatch(signupHandler(body));
+      push('/');
     } catch (error) {
       // Important to check
       if (error.response.data.validations) {
@@ -102,7 +106,8 @@ class UserSignupPage extends React.Component {
   }
 }
 
-const UserSignupPageWithTranslation = withTranslation()(UserSignupPage);
-const UserSignupPageWithApiProgress = withApiProgress(UserSignupPageWithTranslation, '/api/1.0/users');
+const UserSignupPageWithApiProgressForSignupRequest = withApiProgress(UserSignupPage, '/api/1.0/users');
+const UserSignupPageWithApiProgressForAuthRequest = withApiProgress(UserSignupPageWithApiProgressForSignupRequest, '/api/1.0/auth');
+const UserSignupPageWithTranslation = withTranslation()(UserSignupPageWithApiProgressForAuthRequest);
 
-export default UserSignupPageWithApiProgress
+export default connect()(UserSignupPageWithTranslation); 
