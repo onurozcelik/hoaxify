@@ -1,6 +1,7 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import authReducer from './authReducer';
 import SecureLS from 'secure-ls';
+import thunk from 'redux-thunk';
 
 const secureLs = new SecureLS();
 
@@ -28,9 +29,9 @@ const updateStateInStorage = (newState) => {
 
 // 3rd parameter is required for redux extension to work
 const configureStore = () => {
-    
-
-    const store = createStore(authReducer, getStateFromStorage(), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    const store = createStore(authReducer, getStateFromStorage(), composeEnhancers(compose(applyMiddleware(thunk))));
     store.subscribe(() => {
         updateStateInStorage(store.getState());
     });
